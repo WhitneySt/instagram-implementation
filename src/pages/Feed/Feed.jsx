@@ -54,50 +54,50 @@ const Feed = () => {
   const handleAuthentication = () => {
     const TU_APP_ID = "907662524513353";
     const TU_REDIRECT_URI =
-      "https://whitneyst.github.io/findy-app-redux-firebase/";
+      "https://whitneyst.github.io/instagram-implementation/";
     const authUrl = `https://api.instagram.com/oauth/authorize?client_id=${TU_APP_ID}&redirect_uri=${TU_REDIRECT_URI}&scope=user_profile,user_media&response_type=code`;
     window.location.href = authUrl;
   };
 
-   const getPublicAccountInfo = async (username) => {
-     try {
-       const response = await axios.post(
-         "http://localhost:3000/api/instagram/public-account-info",
-         {
-           accessToken,
-           username,
-         }
-       );
-       setPublicAccountInfo(response.data);
-       return response.data.id;
-     } catch (err) {
-       setError("Error al obtener la información de la cuenta pública");
-       console.error("Error:", err);
-     }
-   };
+  const getPublicAccountInfo = async (username) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/instagram/public-account-info",
+        {
+          accessToken,
+          username,
+        }
+      );
+      setPublicAccountInfo(response.data);
+      return response.data.id;
+    } catch (err) {
+      setError("Error al obtener la información de la cuenta pública");
+      console.error("Error:", err);
+    }
+  };
 
-   const getPublicAccountMedia = async (instagramAccountId) => {
-     try {
-       const response = await axios.post(
-         "http://localhost:3000/api/instagram/public-account-media",
-         {
-           accessToken,
-           instagramAccountId,
-         }
-       );
-       setPublicAccountMedia(response.data);
-     } catch (err) {
-       setError("Error al obtener los medios de la cuenta pública");
-       console.error("Error:", err);
-     }
-   };
+  const getPublicAccountMedia = async (instagramAccountId) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/instagram/public-account-media",
+        {
+          accessToken,
+          instagramAccountId,
+        }
+      );
+      setPublicAccountMedia(response.data);
+    } catch (err) {
+      setError("Error al obtener los medios de la cuenta pública");
+      console.error("Error:", err);
+    }
+  };
 
-   const handleSearch = async () => {
-     const accountId = await getPublicAccountInfo(searchUsername);
-     if (accountId) {
-       getPublicAccountMedia(accountId);
-     }
-   };
+  const handleSearch = async () => {
+    const accountId = await getPublicAccountInfo(searchUsername);
+    if (accountId) {
+      getPublicAccountMedia(accountId);
+    }
+  };
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
