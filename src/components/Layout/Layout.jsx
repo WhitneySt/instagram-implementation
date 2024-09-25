@@ -9,7 +9,7 @@ const Layout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isDesktop, isTablet, isMobile } = useScreenDetector();
-  const { isAuthenticated } = useSelector((store) => store.auth);
+  const { isAuthenticated, user } = useSelector((store) => store.auth);
 
   const handleLogout = () => dispatch(logoutThunk());
   const handleBackNavigation = () => navigate(-1);
@@ -19,6 +19,7 @@ const Layout = () => {
       <header>{(isDesktop || isTablet) && <DestopNavbar />}</header>
       <button onClick={handleBackNavigation}>Ir atrás</button>
       {isAuthenticated && <button onClick={handleLogout}>Cerrar sesión</button>}
+      {user?.photoURL && <img src={user?.photoURL} alt={user?.displayName} />}
       Layout
       <Outlet />
       <footer>{isMobile && <MobileNavbar />}</footer>
